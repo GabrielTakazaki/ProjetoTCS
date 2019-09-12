@@ -1,16 +1,19 @@
 package rest.five.bank.InternetBanking.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rest.five.bank.InternetBanking.entities.LoginInterface;
 import rest.five.bank.InternetBanking.model.Login;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 @RequestMapping("/login")
 @CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class LoginController {
 
+    @Autowired
     private LoginInterface loginInterface;
 
     //==================================================================
@@ -27,8 +30,16 @@ public class LoginController {
     //==================================================================
     // Verifica conta Existente
     //==================================================================
-    @GetMapping("/verificaLogin")
-    public boolean verificaLogin(HttpSession sessao, @RequestBody Login login) {
+    @PostMapping("/verificaLogin")
+    public boolean verificaLogin(@RequestBody Login login) {
+        List<Login> listUsers = loginInterface.findAll();
+        for (Login user : listUsers){
+            if(login.getUsername() == user.getUsername()){
+                if (login.getPassword() == user.getPassword())
+                    return true;
+                else return false;
+            }
+        }
         return false;
     }
 

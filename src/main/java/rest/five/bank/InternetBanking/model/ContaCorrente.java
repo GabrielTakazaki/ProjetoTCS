@@ -1,23 +1,16 @@
 package rest.five.bank.InternetBanking.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class ContaCorrente {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_conta_corrent;
     @Column
     private Long num_conta_corrente;
     @Column
     private float saldo_conta_corrente;
-    @Column
-    private Long id_transf;
-    @Column
-    private float id_poupanca;
 
     public Long getId_conta_corrent() {
         return id_conta_corrent;
@@ -41,21 +34,5 @@ public class ContaCorrente {
 
     public void setSaldo_conta_corrente(float saldo_conta_corrente) {
         this.saldo_conta_corrente = saldo_conta_corrente;
-    }
-
-    public Long getId_transf() {
-        return id_transf;
-    }
-
-    public void setId_transf(Long id_transf) {
-        this.id_transf = id_transf;
-    }
-
-    public float getId_poupanca() {
-        return id_poupanca;
-    }
-
-    public void setId_poupanca(float id_poupanca) {
-        this.id_poupanca = id_poupanca;
     }
 }
