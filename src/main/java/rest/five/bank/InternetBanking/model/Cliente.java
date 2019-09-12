@@ -1,49 +1,66 @@
 package rest.five.bank.InternetBanking.model;
+
 import javax.persistence.*;
 
 @Entity
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_cliente;
-
+    private Long idCliente;
     @Column
-    private String nome_cliente;
+    private Long cpfCliente;
     @Column
-    private String sobrenome_cliente;
+    private String password;
     @Column
-    private Long cpf_cliente;
+    private String nomeCliente;
+    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private Conta conta;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn
-    private Login login;
+    //==================================================================
+    // Getters e Setters
+    //==================================================================
+    public String getPassword() {
+        return password;
+    }
 
-    public Long getId_cliente() {
-        return id_cliente;
+    public void setPassword(String password) {
+        this.password = password;
     }
-    public void setId_cliente(Long id_cliente) {
-        this.id_cliente = id_cliente;
+
+    public Long getCpfCliente() {
+        return cpfCliente;
     }
-    public String getNome_cliente() { return nome_cliente; }
-    public void setNome_cliente(String nome_cliente) {
-        this.nome_cliente = nome_cliente;
+
+    public void setCpfCliente(Long cpfCliente) {
+        this.cpfCliente = cpfCliente;
     }
-    public String getSobrenome_cliente() {
-        return sobrenome_cliente;
+
+    public Long getIdCliente() {
+        return idCliente;
     }
-    public void setSobrenome_cliente(String sobrenome_cliente) {
-        this.sobrenome_cliente = sobrenome_cliente;
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
     }
-    public Long getCpf_cliente() {
-        return cpf_cliente;
+
+    public String getNomeCliente() {
+        return nomeCliente;
     }
-    public void setCpf_cliente(Long cpf_cliente) {
-        this.cpf_cliente = cpf_cliente;
+
+    public void setNomeCliente(String nomeCliente) {
+        this.nomeCliente = nomeCliente;
     }
-    public Login getLogin() {
-        return login;
+
+    public Conta getConta() {
+        return conta;
     }
-    public void setLogin(Login login) {
-        this.login = login;
+
+    public void setConta(Conta conta) {
+        this.conta = conta;
     }
+
+    public boolean validaSenha() {
+        return getPassword().length() >= 6;
+    }
+
 }

@@ -7,55 +7,57 @@ import java.util.Date;
 public class Transferencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_transferencia;
-    @Column
-    private Date dt_transferencia;
-    @Column
-    private float val_transferencia;
-    @OneToOne(cascade = CascadeType.ALL)
+    private Long idTransferencia;
+
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
-    private ContaCorrente contaCorrenteEnviada;
-    @OneToOne(cascade = CascadeType.ALL)
+    private Conta contaDebito;
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn
-    private ContaCorrente contaCorrenteReceptora;
+    private Conta contaCredito;
 
-    public Long getId_transferencia() {
-        return id_transferencia;
+    @Column
+    private float valTransferencia;
+    @Column
+    private Date dtTransferencia;
+
+    public Long getIdTransferencia() {
+        return idTransferencia;
     }
 
-    public void setId_transferencia(Long id_transferencia) {
-        this.id_transferencia = id_transferencia;
+    public void setIdTransferencia(Long idTransferencia) {
+        this.idTransferencia = idTransferencia;
     }
 
-    public Date getDt_transferencia() {
-        return dt_transferencia;
+    public Conta getContaDebito() {
+        return contaDebito;
     }
 
-    public void setDt_transferencia(Date dt_transferencia) {
-        this.dt_transferencia = dt_transferencia;
+    public void setContaDebito(Conta contaDebito) {
+        this.contaDebito = contaDebito;
     }
 
-    public float getVal_transferencia() {
-        return val_transferencia;
+    public Conta getContaCredito() {
+        return contaCredito;
     }
 
-    public void setVal_transferencia(float val_transferencia) {
-        this.val_transferencia = val_transferencia;
+    public void setContaCredito(Conta contaCredito) {
+        this.contaCredito = contaCredito;
     }
 
-    public ContaCorrente getContaCorrenteEnviada() {
-        return contaCorrenteEnviada;
+    public float getValTransferencia() {
+        return valTransferencia;
     }
 
-    public void setContaCorrenteEnviada(ContaCorrente contaCorrenteEnviada) {
-        this.contaCorrenteEnviada = contaCorrenteEnviada;
+    public void setValTransferencia(float valTransferencia) {
+        this.valTransferencia = valTransferencia;
     }
 
-    public ContaCorrente getContaCorrenteReceptora() {
-        return contaCorrenteReceptora;
+    public Date getDtTransferencia() {
+        return dtTransferencia;
     }
 
-    public void setContaCorrenteReceptora(ContaCorrente contaCorrenteReceptora) {
-        this.contaCorrenteReceptora = contaCorrenteReceptora;
+    public void setDtTransferencia(Date dtTransferencia) {
+        this.dtTransferencia = dtTransferencia;
     }
 }
