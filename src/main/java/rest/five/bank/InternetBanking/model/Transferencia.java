@@ -9,11 +9,11 @@ public class Transferencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idTransferencia;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idContaDebito", referencedColumnName = "idConta")
     private Conta contaDebito;
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idContaCredito", referencedColumnName = "idConta")
     private Conta contaCredito;
 
     @Column
@@ -60,4 +60,5 @@ public class Transferencia {
     public void setDtTransferencia(Date dtTransferencia) {
         this.dtTransferencia = dtTransferencia;
     }
+
 }
