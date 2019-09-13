@@ -9,8 +9,8 @@ public class Investimento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInvestimento;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn
+    @ManyToOne
+    @JoinColumn(name = "contaId")
     private Conta conta;
     @Column
     private String nomeInvestimento;

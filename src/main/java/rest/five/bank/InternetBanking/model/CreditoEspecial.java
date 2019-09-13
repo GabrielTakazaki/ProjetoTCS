@@ -8,9 +8,11 @@ public class CreditoEspecial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCreditoEspecial;
-    @OneToOne
-    @MapsId
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idConta", referencedColumnName = "idConta")
     private Conta fkIdConta;
+
     @Column
     private float valorDisponivel;
     @Column

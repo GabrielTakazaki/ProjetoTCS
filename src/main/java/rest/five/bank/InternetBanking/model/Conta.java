@@ -10,11 +10,11 @@ public class Conta {
     private Long numConta;
     @Column
     private float saldoConta;
-    @OneToOne
-    @MapsId
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
     private Cliente fkIdCliente;
-    @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
-    private CreditoEspecial creditoEspecial;
+
 
 
     public Long getNumConta() {
@@ -41,13 +41,6 @@ public class Conta {
         this.fkIdCliente = fkIdCliente;
     }
 
-    public CreditoEspecial getCreditoEspecial() {
-        return creditoEspecial;
-    }
-
-    public void setCreditoEspecial(CreditoEspecial creditoEspecial) {
-        this.creditoEspecial = creditoEspecial;
-    }
 
     public void gerarNumConta(List<Conta> contasExistentes){
         this.setNumConta(1516001l);

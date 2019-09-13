@@ -13,8 +13,7 @@ public class Cliente {
     private String password;
     @Column
     private String nomeCliente;
-    @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private Conta conta;
+
 
     //==================================================================
     // Getters e Setters
@@ -51,13 +50,6 @@ public class Cliente {
         this.nomeCliente = nomeCliente;
     }
 
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
 
     public boolean validaSenha() {
         return getPassword().length() >= 6;
