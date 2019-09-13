@@ -1,12 +1,11 @@
 package rest.five.bank.InternetBanking.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Conta {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idConta;
     @Column
     private Long numConta;
     @Column
@@ -17,13 +16,6 @@ public class Conta {
     @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
     private CreditoEspecial creditoEspecial;
 
-    public Long getIdConta() {
-        return idConta;
-    }
-
-    public void setIdConta(Long idConta) {
-        this.idConta = idConta;
-    }
 
     public Long getNumConta() {
         return numConta;
@@ -55,5 +47,14 @@ public class Conta {
 
     public void setCreditoEspecial(CreditoEspecial creditoEspecial) {
         this.creditoEspecial = creditoEspecial;
+    }
+
+    public void gerarNumConta(List<Conta> contasExistentes){
+        this.setNumConta(1516001l);
+        if(!contasExistentes.isEmpty() || contasExistentes != null) {
+            for (Conta conta : contasExistentes) {
+                if(conta.getNumConta() == getNumConta()) setNumConta(getNumConta() + 1);
+            }
+        }
     }
 }
