@@ -10,10 +10,10 @@ public class Transferencia {
     private Long idTransferencia;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idContaDebito", referencedColumnName = "idConta")
+    @JoinColumn(name = "idContaDebito", referencedColumnName = "numConta")
     private Conta contaDebito;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idContaCredito", referencedColumnName = "idConta")
+    @JoinColumn(name = "idContaCredito", referencedColumnName = "numConta")
     private Conta contaCredito;
 
     @Column

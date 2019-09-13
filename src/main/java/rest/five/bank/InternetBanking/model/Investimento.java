@@ -10,7 +10,7 @@ public class Investimento {
     private Long idInvestimento;
 
     @ManyToOne
-    @JoinColumn(name = "contaId")
+    @JoinColumn(name = "contaId", referencedColumnName = "numConta")
     private Conta conta;
     @Column
     private String nomeInvestimento;

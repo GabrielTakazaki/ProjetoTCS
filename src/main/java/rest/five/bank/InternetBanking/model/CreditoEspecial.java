@@ -10,7 +10,7 @@ public class CreditoEspecial {
     private Long idCreditoEspecial;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idConta", referencedColumnName = "idConta")
+    @JoinColumn(name = "idConta", referencedColumnName = "numConta")
     private Conta fkIdConta;
 
     @Column

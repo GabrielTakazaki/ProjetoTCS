@@ -3,6 +3,8 @@ package rest.five.bank.InternetBanking.entities;
 import org.springframework.data.jpa.repository.JpaRepository;
 import rest.five.bank.InternetBanking.model.Conta;
 
-public interface ContaCorrentInterface extends JpaRepository<Conta, Long> {
+public interface ContaInterface extends JpaRepository<Conta, Long> {
+    Conta findByFkIdCliente(Long idCliente);
 
+    Boolean existsByFkIdCliente(Long idCliente);
 }

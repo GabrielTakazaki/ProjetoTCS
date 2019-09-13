@@ -7,7 +7,7 @@ public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
-    @Column
+    @Column(unique = true)
     private Long cpfCliente;
     @Column
     private String password;
@@ -54,5 +54,4 @@ public class Cliente {
     public boolean validaSenha() {
         return getPassword().length() >= 6;
     }
-
 }

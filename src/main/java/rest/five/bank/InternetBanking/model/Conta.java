@@ -12,7 +12,7 @@ public class Conta {
     private float saldoConta;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente")
+    @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", unique = true)
     private Cliente fkIdCliente;
 
 
@@ -43,10 +43,10 @@ public class Conta {
 
 
     public void gerarNumConta(List<Conta> contasExistentes){
-        this.setNumConta(1516001l);
-        if(!contasExistentes.isEmpty() || contasExistentes != null) {
-            for (Conta conta : contasExistentes) {
-                if(conta.getNumConta() == getNumConta()) setNumConta(getNumConta() + 1);
+        setNumConta(1516001l);
+        for (Conta conta : contasExistentes) {
+            if (conta.getNumConta() >= getNumConta()) {
+                setNumConta(1 + getNumConta());
             }
         }
     }
