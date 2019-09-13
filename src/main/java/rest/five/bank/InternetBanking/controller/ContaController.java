@@ -24,22 +24,19 @@ public class ContaController {
     ClienteInterface clienteInterface;
 
     @GetMapping("/contaAdd")
-    public Object addConta(@RequestParam Long id) throws Exception {
-        try {
-            Optional<Cliente> optionalCliente = clienteInterface.findById(id);
-            Cliente cliente = optionalCliente.get();
-            if (contaExiste(id))
-                return contaInterface.findByFkIdCliente(cliente.getIdCliente());
-            else {
-                return contaInterface.save(criaConta(cliente));
-            }
-        } catch (Exception e) {
-            return "Cliente ja possui conta";
+    public Object addConta(@RequestParam Long id) {
+
+        Optional<Cliente> optionalCliente = clienteInterface.findById(id);
+        Cliente cliente = optionalCliente.get();
+        if (contaExiste(cliente))
+            return contaInterface.findByFkIdCliente(cliente);
+        else {
+            return contaInterface.save(criaConta(cliente));
         }
     }
 
-    public boolean contaExiste(Long id) {
-        return contaInterface.findByFkIdCliente(id) == null;
+    public boolean contaExiste(Cliente cliente) {
+        return contaInterface.existsByFkIdCliente(cliente);
     }
 
     public List<Conta> buscarContas() {
