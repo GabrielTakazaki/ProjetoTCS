@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/cliente")
-//@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
 public class ClienteController {
 
     @Autowired
@@ -19,10 +19,11 @@ public class ClienteController {
     // Adicionar nova conta
     //==================================================================
     @PostMapping("/clienteAdd")
-    public String addLogin(Cliente cliente) throws Exception {
+    public String addLogin(@RequestBody Cliente cliente) throws Exception {
         try {
             if (cliente.validaSenha()) {
                 clienteInterface.save(cliente);
+
                 return "Cadastrado";
             } else return "Senha Pequena";
         } catch (Exception e) {
@@ -35,7 +36,7 @@ public class ClienteController {
     //==================================================================
 
     @PostMapping("/verificaCliente")
-    public boolean verificaLogin(Cliente cliente) {
+    public boolean verificaLogin(@RequestBody Cliente cliente) {
         List<Cliente> listUsers = buscarClientes();
         for (Cliente user : listUsers) {
             if (cliente.getCpfCliente().equals(user.getCpfCliente())) {
@@ -51,8 +52,9 @@ public class ClienteController {
     }
 
     @GetMapping("/buscarCliente")
-    public Cliente buscarCliente(@RequestParam Long id) {
-        Optional<Cliente> optCliente = clienteInterface.findById(id);
+    public Cliente buscarCliente(@RequestParam String id) {
+        System.out.println(id);
+        Optional<Cliente> optCliente = clienteInterface.findById(Long.parseLong(id));
         return optCliente.get();
     }
 

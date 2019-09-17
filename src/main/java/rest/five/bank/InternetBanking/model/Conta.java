@@ -7,6 +7,7 @@ import java.util.List;
 public class Conta {
     @Id
     @Column
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long numConta;
     @Column
     private float saldoConta;

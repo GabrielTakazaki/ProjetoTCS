@@ -8,7 +8,7 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCliente;
     @Column(unique = true)
-    private Long cpfCliente;
+    private String cpfCliente;
     @Column
     private String password;
     @Column
@@ -26,11 +26,11 @@ public class Cliente {
         this.password = password;
     }
 
-    public Long getCpfCliente() {
+    public String getCpfCliente() {
         return cpfCliente;
     }
 
-    public void setCpfCliente(Long cpfCliente) {
+    public void setCpfCliente(String cpfCliente) {
         this.cpfCliente = cpfCliente;
     }
 
