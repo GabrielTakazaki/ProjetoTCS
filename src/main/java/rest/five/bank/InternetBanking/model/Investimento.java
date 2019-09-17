@@ -1,14 +1,13 @@
 package rest.five.bank.InternetBanking.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Investimento {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idInvestimento;
-
     @ManyToOne
     @JoinColumn(name = "contaId", referencedColumnName = "numConta")
     private Conta conta;
@@ -17,8 +16,7 @@ public class Investimento {
     @Column
     private float saldo;
     @Column
-    private Date dtInicio;
-
+    private LocalDateTime dtInicio;
     //==================================================================
     // Getters e Setters
     //==================================================================
@@ -45,7 +43,7 @@ public class Investimento {
     }
 
     public void setNomeInvestimento(String nomeInvestimento) {
-        this.nomeInvestimento = nomeInvestimento;
+        this.nomeInvestimento = nomeInvestimento.toUpperCase();
     }
 
     public float getSaldo() {
@@ -56,11 +54,11 @@ public class Investimento {
         this.saldo = saldo;
     }
 
-    public Date getDtInicio() {
+    public LocalDateTime getDtInicio() {
         return dtInicio;
     }
 
-    public void setDtInicio(Date dtInicio) {
+    public void setDtInicio(LocalDateTime dtInicio) {
         this.dtInicio = dtInicio;
     }
 }
