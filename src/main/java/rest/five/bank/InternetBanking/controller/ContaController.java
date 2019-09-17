@@ -19,25 +19,21 @@ public class ContaController {
     ContaInterface contaInterface;
     @Autowired
     ClienteInterface clienteInterface;
+    Conta conta;
 
     @GetMapping("/contaAdd")
     public Object addConta(@RequestParam Long id) {
 
         Optional<Cliente> optionalCliente = clienteInterface.findById(id);
         Cliente cliente = optionalCliente.get();
-        if (contaExiste(cliente))
-            return contaInterface.findByFkIdCliente(cliente);
-        else {
-            return contaInterface.save(criaConta(cliente));
+        if (contaExiste(cliente)) {
+            this.conta = contaInterface.findByFkIdCliente(cliente);
+            return this.conta;
         }
-    }
-
-    public boolean contaExiste(Cliente cliente) {
-        return contaInterface.existsByFkIdCliente(cliente);
-    }
-
-    private List<Conta> buscarContas() {
-        return contaInterface.findAll();
+        else {
+            this.conta = contaInterface.save(criaConta(cliente));
+            return this.conta;
+        }
     }
 
     @GetMapping("/buscarConta")
@@ -47,10 +43,17 @@ public class ContaController {
     }
 
 
+    public boolean contaExiste(Cliente cliente) {
+        return contaInterface.existsByFkIdCliente(cliente);
+    }
+
+    private List<Conta> buscarContas() {
+        return contaInterface.findAll();
+    }
+
     public Conta criaConta(Cliente cliente) {
         Conta conta = new Conta();
         conta.setSaldoConta(0);
-        conta.gerarNumConta(buscarContas());
         conta.setFkIdCliente(cliente);
         return conta;
     }

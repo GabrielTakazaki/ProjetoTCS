@@ -1,14 +1,15 @@
 package rest.five.bank.InternetBanking.model;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
+@SequenceGenerator(name = "seqCartao", sequenceName = "seqCartao", initialValue = 1740, allocationSize = 1)
 public class Conta {
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seqCartao")
     private Long numConta;
+
     @Column
     private float saldoConta;
 
@@ -40,15 +41,5 @@ public class Conta {
 
     public void setFkIdCliente(Cliente fkIdCliente) {
         this.fkIdCliente = fkIdCliente;
-    }
-
-
-    public void gerarNumConta(List<Conta> contasExistentes){
-        setNumConta(1516001l);
-        for (Conta conta : contasExistentes) {
-            if (conta.getNumConta() >= getNumConta()) {
-                setNumConta(1 + getNumConta());
-            }
-        }
     }
 }
