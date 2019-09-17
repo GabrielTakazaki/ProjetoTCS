@@ -45,8 +45,10 @@ public class InvestimentoController {
     @PostMapping("/investimentoAdd")
     public Investimento addInv(@RequestBody Investimento inv) {
         listaInv.add(inv);
+        Optional<Conta> conta = contaInterface.findById(inv.getConta().getNumConta());
+        conta.get().setSaldoConta(conta.get().getSaldoConta() - inv.getSaldo());
+        contaInterface.save(conta.get());
         if (inv.getNomeInvestimento().equals("POUPANCA")) {
-            Optional<Conta> conta = contaInterface.findById(inv.getConta().getNumConta());
             List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento("POUPANCA");
             for (Investimento meuInvestimento : meusInvestimentos) {
                 if (meuInvestimento.getConta().getNumConta().equals(conta.get().getNumConta())) {
