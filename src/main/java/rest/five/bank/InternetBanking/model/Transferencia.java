@@ -1,7 +1,7 @@
 package rest.five.bank.InternetBanking.model;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
 public class Transferencia {
@@ -19,7 +19,7 @@ public class Transferencia {
     @Column
     private float valTransferencia;
     @Column
-    private Date dtTransferencia;
+    private LocalDateTime dtTransferencia;
 
     public Long getIdTransferencia() {
         return idTransferencia;
@@ -53,11 +53,11 @@ public class Transferencia {
         this.valTransferencia = valTransferencia;
     }
 
-    public Date getDtTransferencia() {
+    public LocalDateTime getDtTransferencia() {
         return dtTransferencia;
     }
 
-    public void setDtTransferencia(Date dtTransferencia) {
+    public void setDtTransferencia(LocalDateTime dtTransferencia) {
         this.dtTransferencia = dtTransferencia;
     }
 
