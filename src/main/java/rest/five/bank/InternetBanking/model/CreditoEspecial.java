@@ -14,9 +14,9 @@ public class CreditoEspecial {
     private Conta fkIdConta;
 
     @Column
-    private float valorDisponivel;
+    private float valorSaldo;
     @Column
-    private Date dtCredito;
+    private Date dtCredito = new Date();
 
     public Long getIdCreditoEspecial() {
         return idCreditoEspecial;
@@ -34,12 +34,12 @@ public class CreditoEspecial {
         this.fkIdConta = fkIdConta;
     }
 
-    public float getValorDisponivel() {
-        return valorDisponivel;
+    public float getValorSaldo() {
+        return valorSaldo;
     }
 
-    public void setValorDisponivel(float valorDisponivel) {
-        this.valorDisponivel = valorDisponivel;
+    public void setValorSaldo(float valorDisponivel) {
+        this.valorSaldo = valorDisponivel;
     }
 
     public Date getDtCredito() {

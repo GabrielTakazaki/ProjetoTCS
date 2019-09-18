@@ -10,4 +10,6 @@ public interface InvestimentoInterface extends JpaRepository<Investimento, Long>
     Conta findByConta(Conta contaId);
 
     List<Investimento> findAllByNomeInvestimento(String nomeInvestimento);
+
+
 }

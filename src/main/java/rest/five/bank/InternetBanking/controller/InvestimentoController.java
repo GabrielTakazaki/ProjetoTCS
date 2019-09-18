@@ -26,12 +26,13 @@ public class InvestimentoController {
         public void run() {
             while (true) {
                 try {
+                    listaInv = retornaListaInv();
                     System.out.println("TESTE");
-                    for (Investimento inves : listaInv()) {
+                    for (Investimento inves : listaInv) {
                         calcInvestimento(inves);
                     }
 
-                    Thread.sleep(5000);
+                    Thread.sleep(100000);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -43,34 +44,43 @@ public class InvestimentoController {
     // Adiciona um novo investimento
     //================================================================================
     @PostMapping("/investimentoAdd")
-    public Investimento addInv(@RequestBody Investimento inv) {
-        listaInv.add(inv);
+    public Object addInv(@RequestBody Investimento inv) {
         Optional<Conta> conta = contaInterface.findById(inv.getConta().getNumConta());
-        conta.get().setSaldoConta(conta.get().getSaldoConta() - inv.getSaldo());
-        contaInterface.save(conta.get());
-        if (inv.getNomeInvestimento().equals("POUPANCA")) {
-            List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento("POUPANCA");
-            for (Investimento meuInvestimento : meusInvestimentos) {
-                if (meuInvestimento.getConta().getNumConta().equals(conta.get().getNumConta())) {
-                    float aux = meuInvestimento.getSaldo() + inv.getSaldo();
-                    inv = meuInvestimento;
-                    inv.setSaldo(aux);
+        if (conta.get().getSaldoConta() >= inv.getSaldo()) {
+            boolean entrou = false;
+            if (inv.getNomeInvestimento().equals("POUPANCA")) {
+                List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento("POUPANCA");
+                for (Investimento meuInvestimento : meusInvestimentos) {
+                    if (meuInvestimento.getConta().getNumConta().equals(conta.get().getNumConta())) {
+                        float aux = meuInvestimento.getSaldo() + inv.getSaldo();
+                        inv = meuInvestimento;
+                        inv.setSaldo(aux);
+                        entrou = true;
+                    }
+
+                }
+                if (listaInv.isEmpty() || !entrou) {
+                    inv.setConta(conta.get());
                 }
             }
+            conta.get().setSaldoConta(conta.get().getSaldoConta() - inv.getSaldo());
+            contaInterface.save(conta.get());
+            investimentoInterface.save(inv);
+
+            if (!thread.isAlive())
+                thread.start();
+
+            return inv;
+        } else {
+            return "Não possui saldo suficiente";
         }
-        investimentoInterface.save(inv);
-
-        if (!thread.isAlive())
-            thread.start();
-
-        return inv;
     }
 
     //================================================================================
     // Retorna a lista de investimento
     //================================================================================
     @GetMapping("/retornaInvestimentos")
-    public List<Investimento> listaInv() {
+    public List<Investimento> retornaListaInv() {
         return investimentoInterface.findAll();
     }
 

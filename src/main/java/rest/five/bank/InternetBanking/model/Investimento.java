@@ -16,7 +16,7 @@ public class Investimento {
     @Column
     private float saldo;
     @Column
-    private LocalDateTime dtInicio;
+    private LocalDateTime dtInicio = LocalDateTime.now();
     //==================================================================
     // Getters e Setters
     //==================================================================
