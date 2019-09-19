@@ -1,3 +1,4 @@
+/*
 package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.context.annotation.Configuration;
@@ -26,10 +27,12 @@ public class BasicAuthConfiguration
             throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("**", "/conta/*", "/credito/*", "/investimento/*", "/transferencia/*").permitAll()
+                .antMatchers("/credito/*", "/investimento/*", "/transferencia/*").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
                 .httpBasic();
+        http.httpBasic().disable();
     }
 }
+*/
