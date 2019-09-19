@@ -1,12 +1,11 @@
 package rest.five.bank.InternetBanking.controller;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import rest.five.bank.InternetBanking.entities.ClienteInterface;
 import rest.five.bank.InternetBanking.model.Cliente;
-
-import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/cliente")
@@ -58,5 +57,9 @@ public class ClienteController {
         return optCliente.get();
     }
 
+    @GetMapping("/buscarCpf")
+    public Cliente buscarCpf(@RequestParam String cpf) {
+        return clienteInterface.findByCpfCliente(cpf);
+    }
 
 }
