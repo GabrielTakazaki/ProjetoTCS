@@ -2,16 +2,18 @@ package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import rest.five.bank.InternetBanking.dto.CreditoDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/credito")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin
 public class CreditoEspecialController {
 
     @Autowired
@@ -20,17 +22,21 @@ public class CreditoEspecialController {
     ContaInterface contaInterface;
 
     @PostMapping("/creditoAdd")
-    public Object save(@RequestBody CreditoEspecial cdEspecial) {
-        Optional<Conta> optC = contaInterface.findById(cdEspecial.getFkIdConta().getNumConta());
+    @Transactional
+    public String save(@RequestBody CreditoDTO cdEspecial) {
+        Optional<Conta> optC = contaInterface.findById(cdEspecial.getIdCliente());
         Conta conta = optC.get();
-        cdEspecial.setFkIdConta(conta);
+        CreditoEspecial cdEspecialNew = new CreditoEspecial();
+        cdEspecialNew.setFkIdConta(conta);
+        cdEspecialNew.setValorSaldo(cdEspecial.getValorSaldo());
         if (cdInterface.existsByFkIdConta(conta)) {
             return "Seu crédito especial está ativo.";
         }
         if (conta.getSaldoConta() == 0) {
             if (cdEspecial.getValorSaldo() <= 600) {
-
-                return cdInterface.save(cdEspecial);
+                conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
+                cdInterface.save(cdEspecialNew);
+                return "Pedito aceito com sucesso!";
             } else
                 return "O crédito que você pediu é superior ao permitido";
         } else

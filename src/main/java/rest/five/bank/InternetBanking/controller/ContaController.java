@@ -2,11 +2,15 @@ package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import rest.five.bank.InternetBanking.dto.DepositoDTO;
 import rest.five.bank.InternetBanking.entities.ClienteInterface;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
+import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Cliente;
 import rest.five.bank.InternetBanking.model.Conta;
+import rest.five.bank.InternetBanking.model.CreditoEspecial;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +23,9 @@ public class ContaController {
     ContaInterface contaInterface;
     @Autowired
     ClienteInterface clienteInterface;
+    @Autowired
+    CreditoEspecialInterface cdInterface;
+
     Conta conta;
 
     @GetMapping("/contaAdd")
@@ -55,8 +62,25 @@ public class ContaController {
     public Conta criaConta(Cliente cliente) {
         Conta conta = new Conta();
 
-        conta.setSaldoConta(10000);
+        conta.setSaldoConta(0);
         conta.setFkIdCliente(cliente);
         return conta;
+    }
+
+    @PutMapping("/depositar")
+    @Transactional
+    public Object depositar(@RequestBody DepositoDTO dpDTO) {
+        Optional<Conta> optC = contaInterface.findById(dpDTO.getIdConta());
+        optC.get().setSaldoConta(optC.get().getSaldoConta() + dpDTO.getValorDeposito());
+        if (cdInterface.existsByFkIdConta(optC.get())) {
+            CreditoEspecial cd = cdInterface.findByFkIdConta(optC.get());
+            cd.setValorSaldo(cd.getValorSaldo() - dpDTO.getValorDeposito());
+            if (cd.getValorSaldo() <= 0) {
+                cd.setFkIdConta(null);
+                cdInterface.save(cd);
+                cdInterface.delete(cd);
+            }
+        }
+        return "Deposito realizado com sucesso!";
     }
 }
