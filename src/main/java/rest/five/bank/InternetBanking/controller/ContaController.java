@@ -47,13 +47,15 @@ public class ContaController {
         return contaInterface.existsByFkIdCliente(cliente);
     }
 
+    @GetMapping("/listaContas")
     private List<Conta> buscarContas() {
         return contaInterface.findAll();
     }
 
     public Conta criaConta(Cliente cliente) {
         Conta conta = new Conta();
-        conta.setSaldoConta(1000);
+
+        conta.setSaldoConta(10000);
         conta.setFkIdCliente(cliente);
         return conta;
     }

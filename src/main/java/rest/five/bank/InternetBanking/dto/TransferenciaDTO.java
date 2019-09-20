@@ -1,10 +1,21 @@
 package rest.five.bank.InternetBanking.dto;
 
+import rest.five.bank.InternetBanking.model.Transferencia;
+
 public class TransferenciaDTO {
 
     private Long idCreditoDTO;
     private Long idDebitoDTO;
     private float valorTransferenciaDTO;
+
+    public TransferenciaDTO() {
+    }
+
+    public TransferenciaDTO(Transferencia tr) {
+        this.idCreditoDTO = tr.getContaCredito().getNumConta();
+        this.idDebitoDTO = tr.getContaDebito().getNumConta();
+        this.valorTransferenciaDTO = tr.getValTransferencia();
+    }
 
     public Long getIdCreditoDTO() {
         return idCreditoDTO;
