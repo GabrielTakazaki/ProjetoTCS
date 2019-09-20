@@ -2,11 +2,13 @@ package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import rest.five.bank.InternetBanking.dto.InvestimentoDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
 import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.Investimento;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,13 +28,12 @@ public class InvestimentoController {
         public void run() {
             while (true) {
                 try {
+                    Thread.sleep(60000);
                     listaInv = retornaListaInv();
                     System.out.println("TESTE");
                     for (Investimento inves : listaInv) {
                         calcInvestimento(inves);
                     }
-
-                    Thread.sleep(60000);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -96,6 +97,7 @@ public class InvestimentoController {
     //================================================================================
     // Calcula o investimento
     //================================================================================
+    @Transactional
     public void calcInvestimento(Investimento inv) {
 
         if (inv.getNomeInvestimento().equals("CDI")) {
@@ -106,5 +108,20 @@ public class InvestimentoController {
             inv.setSaldo(inv.getSaldo() * 1.03f);
         }
         investimentoInterface.save(inv);
+    }
+
+    @PutMapping("/devolveDinheiro")
+    @Transactional
+    public Object tiraDinheiro(@RequestBody InvestimentoDTO invDto) {
+        Optional<Investimento> inv = investimentoInterface.findById(invDto.getIdInvestimento());
+        inv.get().setSaldo(inv.get().getSaldo() - invDto.getSaldo());
+        Optional<Conta> optC = contaInterface.findById(inv.get().getConta().getNumConta());
+        optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
+        if (inv.get().getSaldo() <= 0) {
+            inv.get().setConta(null);
+            investimentoInterface.save(inv.get());
+            investimentoInterface.delete(inv.get());
+        }
+        return "Investimento retirando com sucesso";
     }
 }
