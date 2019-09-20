@@ -11,5 +11,6 @@ public interface InvestimentoInterface extends JpaRepository<Investimento, Long>
 
     List<Investimento> findAllByNomeInvestimento(String nomeInvestimento);
 
+    List<Investimento> findAllByConta(Conta conta);
 
 }

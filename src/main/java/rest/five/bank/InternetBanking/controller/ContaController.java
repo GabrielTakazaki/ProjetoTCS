@@ -53,7 +53,7 @@ public class ContaController {
 
     public Conta criaConta(Cliente cliente) {
         Conta conta = new Conta();
-        conta.setSaldoConta(0);
+        conta.setSaldoConta(1000);
         conta.setFkIdCliente(cliente);
         return conta;
     }

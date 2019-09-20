@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/investimento")
-//@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin
 public class InvestimentoController {
     @Autowired
     private InvestimentoInterface investimentoInterface;
@@ -32,7 +32,7 @@ public class InvestimentoController {
                         calcInvestimento(inves);
                     }
 
-                    Thread.sleep(100000);
+                    Thread.sleep(60000);
                 } catch (Exception e) {
                     System.out.println(e);
                 }
@@ -48,6 +48,7 @@ public class InvestimentoController {
         Optional<Conta> conta = contaInterface.findById(inv.getConta().getNumConta());
         if (conta.get().getSaldoConta() >= inv.getSaldo()) {
             boolean entrou = false;
+            inv.setNomeInvestimento(inv.getNomeInvestimento().toUpperCase());
             if (inv.getNomeInvestimento().equals("POUPANCA")) {
                 List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento("POUPANCA");
                 for (Investimento meuInvestimento : meusInvestimentos) {
@@ -74,6 +75,14 @@ public class InvestimentoController {
         } else {
             return "Não possui saldo suficiente";
         }
+    }
+
+
+    @GetMapping("/contaInvestimento")
+    public List<Investimento> retornaInvestimentos(@RequestParam Long numeroConta) {
+        Optional<Conta> conta = contaInterface.findById(numeroConta);
+        List<Investimento> listInvestimento = investimentoInterface.findAllByConta(conta.get());
+        return listInvestimento;
     }
 
     //================================================================================
