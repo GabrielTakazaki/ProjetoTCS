@@ -8,6 +8,7 @@ import rest.five.bank.InternetBanking.controller.Form.ClienteForm;
 import rest.five.bank.InternetBanking.controller.dto.ClienteDTO;
 import rest.five.bank.InternetBanking.model.Cliente;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /*import javax.servlet.http.HttpServletRequest;
@@ -26,7 +27,7 @@ public class ClienteController {
     // Adicionar nova conta
     //==================================================================
     @PostMapping("/clienteAdd")
-    public ResponseEntity<ClienteDTO> addLogin(@RequestBody ClienteForm clForm) {
+    public ResponseEntity<ClienteDTO> addLogin(@RequestBody @Valid ClienteForm clForm) {
         return ResponseEntity.ok(clBusiness.save(clForm));
     }
 
