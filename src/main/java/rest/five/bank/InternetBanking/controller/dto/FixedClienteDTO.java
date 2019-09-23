@@ -56,4 +56,13 @@ public class FixedClienteDTO {
     public static void setPassword(String passwd) {
         password = passwd;
     }
+
+    public static Cliente returnCliente(){
+        Cliente c = new Cliente();
+        c.setCpfCliente(cpfCliente);
+        c.setNomeCliente(nomeCliente);
+        c.setPassword(password);
+        c.setIdCliente(idCliente);
+        return c;
+    }
 }

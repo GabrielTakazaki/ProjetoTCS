@@ -4,8 +4,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import rest.five.bank.InternetBanking.model.Cliente;
 import rest.five.bank.InternetBanking.model.Conta;
 
+import java.util.Optional;
+
 public interface ContaInterface extends JpaRepository<Conta, Long> {
     Conta findByFkIdCliente(Cliente idCliente);
-
     Boolean existsByFkIdCliente(Cliente idCliente);
 }

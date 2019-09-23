@@ -6,6 +6,5 @@ import rest.five.bank.InternetBanking.model.CreditoEspecial;
 
 public interface CreditoEspecialInterface extends JpaRepository<CreditoEspecial, Long> {
     boolean existsByFkIdConta(Conta conta);
-
     CreditoEspecial findByFkIdConta(Conta conta);
 }
