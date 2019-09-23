@@ -2,7 +2,7 @@ package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rest.five.bank.InternetBanking.dto.InvestimentoDTO;
+import rest.five.bank.InternetBanking.controller.dto.InvestimentoDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
 import rest.five.bank.InternetBanking.model.Conta;

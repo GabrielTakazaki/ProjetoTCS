@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import rest.five.bank.InternetBanking.controller.Form.ContaForm;
 import rest.five.bank.InternetBanking.controller.dto.FixedClienteDTO;
 import rest.five.bank.InternetBanking.dto.DepositoDTO;
+import rest.five.bank.InternetBanking.entities.ClienteInterface;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Conta;
@@ -15,6 +16,8 @@ import java.util.Optional;
 
 @Service
 public class ContaBusiness {
+    @Autowired
+    ClienteInterface clienteInterface;
     @Autowired
     private ContaInterface contaInterface;
     @Autowired
@@ -28,7 +31,8 @@ public class ContaBusiness {
             return contaInterface.findByFkIdCliente(FixedClienteDTO.returnCliente());
         }
         else {
-            return contaInterface.save(contaForm.criaConta());
+            Conta conta = contaForm.criaConta(clienteInterface.findByCpfCliente(FixedClienteDTO.getCpfCliente()));
+            return contaInterface.save(conta);
         }
     }
 

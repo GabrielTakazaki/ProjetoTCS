@@ -1,7 +1,5 @@
 package rest.five.bank.InternetBanking.controller.Form;
 
-import rest.five.bank.InternetBanking.controller.dto.ClienteDTO;
-import rest.five.bank.InternetBanking.controller.dto.FixedClienteDTO;
 import rest.five.bank.InternetBanking.model.Cliente;
 import rest.five.bank.InternetBanking.model.Conta;
 
@@ -25,10 +23,10 @@ public class ContaForm {
         this.fkIdCliente = fkIdCliente;
     }
 
-    public Conta criaConta() {
+    public Conta criaConta(Cliente cliente) {
         Conta conta = new Conta();
         conta.setSaldoConta(0);
-        conta.setFkIdCliente(FixedClienteDTO.returnCliente());
+        conta.setFkIdCliente(cliente);
         return conta;
     }
 }
