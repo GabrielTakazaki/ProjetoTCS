@@ -13,4 +13,6 @@ public interface InvestimentoInterface extends JpaRepository<Investimento, Long>
 
     List<Investimento> findAllByConta(Conta conta);
 
+    Boolean existsByConta(Conta conta);
+
 }
