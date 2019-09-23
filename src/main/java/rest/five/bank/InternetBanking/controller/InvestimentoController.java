@@ -50,8 +50,9 @@ public class InvestimentoController {
         if (conta.get().getSaldoConta() >= inv.getSaldo()) {
             boolean entrou = false;
             inv.setNomeInvestimento(inv.getNomeInvestimento().toUpperCase());
-            if (inv.getNomeInvestimento().equals("POUPANCA")) {
-                List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento("POUPANCA");
+            String tipoDeInvestimento = tipoDeInvestimento(inv);
+            if (tipoDeInvestimento != null) {
+                List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento(tipoDeInvestimento);
                 for (Investimento meuInvestimento : meusInvestimentos) {
                     if (meuInvestimento.getConta().getNumConta().equals(conta.get().getNumConta())) {
                         float aux = meuInvestimento.getSaldo() + inv.getSaldo();
@@ -59,15 +60,16 @@ public class InvestimentoController {
                         inv.setSaldo(aux);
                         entrou = true;
                     }
-
                 }
                 if (listaInv.isEmpty() || !entrou) {
                     inv.setConta(conta.get());
                 }
+                conta.get().setSaldoConta(conta.get().getSaldoConta() - inv.getSaldo());
+                contaInterface.save(conta.get());
+                investimentoInterface.save(inv);
+            } else {
+                return "Tipo de investimento não existe";
             }
-            conta.get().setSaldoConta(conta.get().getSaldoConta() - inv.getSaldo());
-            contaInterface.save(conta.get());
-            investimentoInterface.save(inv);
 
             if (!thread.isAlive())
                 thread.start();
@@ -78,6 +80,18 @@ public class InvestimentoController {
         }
     }
 
+    public String tipoDeInvestimento (Investimento investimento) {
+        if (investimento.getNomeInvestimento().equals("POUPANCA")) {
+            return "POUPANCA";
+        }
+        else if (investimento.getNomeInvestimento().equals("CDI")) {
+            return "CDI";
+        }
+        else if (investimento.getNomeInvestimento().equals("IPCA")) {
+            return "IPCA";
+        }
+        else return null;
+    }
 
     @GetMapping("/contaInvestimento")
     public List<Investimento> retornaInvestimentos(@RequestParam Long numeroConta) {
@@ -107,7 +121,6 @@ public class InvestimentoController {
         } else if (inv.getNomeInvestimento().equals("IPCA")) {
             inv.setSaldo(inv.getSaldo() * 1.03f);
         }
-        investimentoInterface.save(inv);
     }
 
     @PutMapping("/devolveDinheiro")
@@ -118,8 +131,6 @@ public class InvestimentoController {
         Optional<Conta> optC = contaInterface.findById(inv.get().getConta().getNumConta());
         optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
         if (inv.get().getSaldo() <= 0) {
-            inv.get().setConta(null);
-            investimentoInterface.save(inv.get());
             investimentoInterface.delete(inv.get());
         }
         return "Investimento retirando com sucesso";
