@@ -1,12 +1,14 @@
 package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import rest.five.bank.InternetBanking.entities.ClienteInterface;
+import rest.five.bank.InternetBanking.Business.ClienteBusiness;
+import rest.five.bank.InternetBanking.controller.Form.ClienteForm;
+import rest.five.bank.InternetBanking.controller.dto.ClienteDTO;
 import rest.five.bank.InternetBanking.model.Cliente;
 
 import java.util.List;
-import java.util.Optional;
 
 /*import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -14,57 +16,48 @@ import java.util.Base64;*/
 
 @RestController
 @RequestMapping("/cliente")
-@CrossOrigin(origins = "http://localhost:4200", allowedHeaders = "*")
+@CrossOrigin
 public class ClienteController {
 
     @Autowired
-    private ClienteInterface clienteInterface;
+    private ClienteBusiness clBusiness;
+
     //==================================================================
     // Adicionar nova conta
     //==================================================================
     @PostMapping("/clienteAdd")
-    public String addLogin(@RequestBody Cliente cliente) throws Exception {
-        try {
-            if (cliente.validaSenha()) {
-                clienteInterface.save(cliente);
-
-                return "Cadastrado";
-            } else return "Senha Pequena";
-        } catch (Exception e) {
-            return "Cpf ja existe";
-        }
+    public ResponseEntity<ClienteDTO> addLogin(@RequestBody ClienteForm clForm) {
+        return ResponseEntity.ok(clBusiness.save(clForm));
     }
 
     //==================================================================
     // Verifica conta Existente
     //==================================================================
-
     @PostMapping("/verificaCliente")
-    public boolean verificaLogin(@RequestBody Cliente cliente) {
-        List<Cliente> listUsers = buscarClientes();
-        for (Cliente user : listUsers) {
-            if (cliente.getCpfCliente().equals(user.getCpfCliente())) {
-                return cliente.getPassword().equals(user.getPassword());
-            }
-        }
-        return false;
+    public boolean verificaLogin(@RequestBody ClienteForm clForm) {
+        return clBusiness.verifLogin(clForm);
     }
 
+    //==================================================================
+    // Busca todos os clientes existentes
+    //==================================================================
     @GetMapping("/buscarTodos")
     public List<Cliente> buscarClientes() {
-        return clienteInterface.findAll();
+        return clBusiness.buscarClientes();
     }
 
-    @GetMapping("/buscarCliente")
-    public Cliente buscarCliente(@RequestParam String id) {
-        System.out.println(id);
-        Optional<Cliente> optCliente = clienteInterface.findById(Long.parseLong(id));
-        return optCliente.get();
-    }
+    //==================================================================
+    // Buscar cliente para login
+    //==================================================================
 
     @GetMapping("/buscarCpf")
-    public Cliente buscarCpf(@RequestParam String cpf) {
-        return clienteInterface.findByCpfCliente(cpf);
+    public ClienteDTO buscarCpf(@RequestParam String cpf) {
+        return clBusiness.findCPF(cpf);
+    }
+
+    @GetMapping("/fixedCliente")
+    public ClienteDTO getFixed() {
+        return new ClienteDTO();
     }
 
     //==================================================================

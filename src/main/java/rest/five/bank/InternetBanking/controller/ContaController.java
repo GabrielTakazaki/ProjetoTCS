@@ -55,7 +55,7 @@ public class ContaController {
     }
 
     @GetMapping("/listaContas")
-    private List<Conta> buscarContas() {
+    public List<Conta> buscarContas() {
         return contaInterface.findAll();
     }
 
