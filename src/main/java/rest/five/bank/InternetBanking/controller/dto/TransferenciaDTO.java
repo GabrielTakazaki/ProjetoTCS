@@ -2,10 +2,13 @@ package rest.five.bank.InternetBanking.controller.dto;
 
 import rest.five.bank.InternetBanking.model.Transferencia;
 
+import javax.validation.constraints.Positive;
+
 public class TransferenciaDTO {
 
     private Long idCreditoDTO;
     private Long idDebitoDTO;
+    @Positive(message = "O valor não pode ser zero nem negativo")
     private float valorTransferenciaDTO;
 
     public TransferenciaDTO() {
