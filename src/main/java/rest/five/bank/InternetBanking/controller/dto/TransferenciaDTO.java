@@ -1,4 +1,4 @@
-package rest.five.bank.InternetBanking.dto;
+package rest.five.bank.InternetBanking.controller.dto;
 
 import rest.five.bank.InternetBanking.model.Transferencia;
 

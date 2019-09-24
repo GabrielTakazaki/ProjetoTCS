@@ -28,35 +28,9 @@ public class InvestimentoController {
     public Object addInv(@RequestBody @Valid InvestimentoDTO investimentoDTO) {
         return investimentoBusiness.addInv(investimentoDTO);
     }
-            /*investimentoDTO.setNomeInvestimento(investimentoDTO.getNomeInvestimento().toUpperCase());
-            String tipoDeInvestimento = tipoDeInvestimento(investimentoDTO);
-            if (tipoDeInvestimento != null) {
-                List<Investimento> meusInvestimentos = investimentoInterface.findAllByNomeInvestimento(tipoDeInvestimento);
-                for (Investimento meuInvestimento : meusInvestimentos) {
-                    if (meuInvestimento.getConta().getNumConta().equals(conta.get().getNumConta())) {
-                        float aux = meuInvestimento.getSaldo() + investimentoDTO.getSaldo();
-                        investimentoDTO = meuInvestimento;
-                        investimentoDTO.setSaldo(aux);
-                        entrou = true;
-                    }
-                }
-                if (listaInv.isEmpty() || !entrou) {
-                    investimentoDTO.setConta(conta.get());
-                }
-                conta.get().setSaldoConta(conta.get().getSaldoConta() - investimentoDTO.getSaldo());
-                contaInterface.save(conta.get());
-                investimentoInterface.save(investimentoDTO);
-            } else {
-                return "Tipo de investimento não existe";
-            }
-            return investimentoDTO;
-        } else {
-            return "Não possui saldo suficiente";
-        }*/
-
 
     @GetMapping("/contaInvestimento")
-    public List<Investimento> retornaInvestimentos(@RequestParam Long numeroConta) {
+    public List<InvestimentoDTO> retornaInvestimentos(@RequestParam Long numeroConta) {
         return investimentoBusiness.retornaInvestimentos(numeroConta);
     }
 

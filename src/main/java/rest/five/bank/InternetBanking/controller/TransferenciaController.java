@@ -2,7 +2,7 @@ package rest.five.bank.InternetBanking.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import rest.five.bank.InternetBanking.dto.TransferenciaDTO;
+import rest.five.bank.InternetBanking.controller.dto.TransferenciaDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.TransferenciaInterface;
 import rest.five.bank.InternetBanking.model.Conta;
@@ -25,9 +25,6 @@ public class TransferenciaController {
 
     @PostMapping("/addTransf")
     public TransferenciaDTO addTrans(@RequestBody TransferenciaDTO transferenciaDTO) {
-        System.out.println(transferenciaDTO.getIdDebitoDTO());
-        System.out.println(transferenciaDTO.getIdCreditoDTO());
-        System.out.println(transferenciaDTO.getValorTransferenciaDTO());
         Transferencia transf = new Transferencia();
 
         Optional<Conta> optCDebito = contaInterface.findById(transferenciaDTO.getIdDebitoDTO());
@@ -45,7 +42,6 @@ public class TransferenciaController {
 
     @GetMapping("/extratoTransf")
     public List<Transferencia> listTransf(@RequestParam Long idConta) {
-        System.out.println(idConta);
         List<Transferencia> listaTransferencia = new ArrayList<>();
         for (Transferencia transf : transferenciaInterface.findAll()) {
             if (transf.getContaDebito().getNumConta().equals(idConta) || transf.getContaCredito().getNumConta().equals(idConta)) {
@@ -67,7 +63,6 @@ public class TransferenciaController {
                 transferenciaDTOList.add(new TransferenciaDTO(item));
             }
         });
-        System.out.println(transferenciaDTOList.size());
         return transferenciaDTOList;
     }
 

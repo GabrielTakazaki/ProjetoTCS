@@ -1,4 +1,4 @@
-package rest.five.bank.InternetBanking.dto;
+package rest.five.bank.InternetBanking.controller.dto;
 
 public class DepositoDTO {
     private float valorDeposito;

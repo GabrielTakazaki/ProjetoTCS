@@ -12,6 +12,16 @@ public class InvestimentoDTO {
     @PositiveOrZero(message = "O valor não pode ser negativo")
     private float saldo;
 
+    public InvestimentoDTO() {
+    }
+
+    public InvestimentoDTO(Investimento investimento) {
+        idInvestimento = investimento.getIdInvestimento();
+        nomeInvestimento = investimento.getNomeInvestimento();
+        conta = investimento.getConta().getNumConta();
+        saldo = investimento.getSaldo();
+    }
+
     public Long getIdInvestimento() {
         return idInvestimento;
     }

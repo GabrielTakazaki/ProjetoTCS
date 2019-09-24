@@ -11,6 +11,7 @@ import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.Investimento;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -123,18 +124,20 @@ public class InvestimentoBusiness {
         inv.get().setSaldo(inv.get().getSaldo() - invDto.getSaldo());
         Optional<Conta> optC = contaInterface.findById(inv.get().getConta().getNumConta());
         optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
-        if (inv.get().getSaldo() <= 0) {
-            investimentoInterface.delete(inv.get());
-        }
+        investimentoInterface.delete(inv.get());
         return "Investimento retirando com sucesso";
     }
 
     //================================================================================
     // Lista os investimentos e retorna para o front
     //================================================================================
-    public List<Investimento> retornaInvestimentos(Long numeroConta) {
+    public List<InvestimentoDTO> retornaInvestimentos(Long numeroConta) {
         Optional<Conta> conta = contaInterface.findById(numeroConta);
-        List<Investimento> listInvestimento = investimentoInterface.findAllByConta(conta.get());
+        List<InvestimentoDTO> listInvestimento = new ArrayList<>();
+        investimentoInterface.findAllByConta(conta.get()).forEach(investimento -> {
+            listInvestimento.add(new InvestimentoDTO(investimento));
+        });
+
         return listInvestimento;
     }
 }
