@@ -59,6 +59,6 @@ public class ContaBusiness {
                 this.creditoEspecialInteface.delete(creditoEspecial);
             }
         }
-        return "Deposito realizado com sucesso!";
+        return optC.get();
     }
 }

@@ -1,5 +1,6 @@
 package rest.five.bank.InternetBanking.controller.Form;
 
+import rest.five.bank.InternetBanking.config.validations.CpfValid.ValidacaoCPF;
 import rest.five.bank.InternetBanking.model.Cliente;
 
 import javax.validation.constraints.NotNull;
@@ -8,6 +9,7 @@ public class ClienteForm {
     @NotNull(message = "O nome não pode ser nulo")
     private String nomeCliente;
     @NotNull(message = "Cpf não pode estar vazio")
+    @ValidacaoCPF(message = "O cpf informado é invalido")
     private String cpfCliente;
     @NotNull(message = "A senha não pode estar vazia")
     private String password;
