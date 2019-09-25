@@ -45,7 +45,7 @@ public class ContaBusiness {
         return contaInterface.findAll();
     }
 
-    public Object depositar(DepositoDTO dpDTO) {
+    public void depositar(DepositoDTO dpDTO) {
         Optional<Conta> optC = contaInterface.findById(dpDTO.getIdConta());
         optC.get().setSaldoConta(optC.get().getSaldoConta() + dpDTO.getValorDeposito());
 
@@ -59,6 +59,5 @@ public class ContaBusiness {
                 this.creditoEspecialInteface.delete(creditoEspecial);
             }
         }
-        return optC.get();
     }
 }

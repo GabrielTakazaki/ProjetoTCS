@@ -6,6 +6,8 @@ import rest.five.bank.InternetBanking.Business.CreditoEspecialBusiness;
 import rest.five.bank.InternetBanking.controller.dto.CreditoDTO;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/credito")
 @CrossOrigin
@@ -15,8 +17,8 @@ public class CreditoEspecialController {
     CreditoEspecialBusiness creditoEspecialBusiness;
 
     @PostMapping("/creditoAdd")
-    public String save(@RequestBody CreditoDTO cdEspecial) {
-        return creditoEspecialBusiness.save(cdEspecial);
+    public void save(@RequestBody @Valid CreditoDTO cdEspecial) {
+        creditoEspecialBusiness.save(cdEspecial);
     }
 
     @GetMapping("/findCredito")

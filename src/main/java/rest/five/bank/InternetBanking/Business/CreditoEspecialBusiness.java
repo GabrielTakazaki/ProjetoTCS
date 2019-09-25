@@ -20,24 +20,30 @@ public class CreditoEspecialBusiness {
     ContaInterface contaInterface;
 
     @Transactional
-    public String save(CreditoDTO cdEspecial) {
+    public void save(CreditoDTO cdEspecial) {
         Optional<Conta> optC = contaInterface.findById(cdEspecial.getIdCliente());
         Conta conta = optC.get();
+        if (cdInterface.existsByFkIdConta(conta)) {
+            atualizaCredito(conta, cdEspecial);
+        } else {
+            criaCredito(conta, cdEspecial);
+        }
+    }
+
+    private void criaCredito(Conta conta, CreditoDTO cdEspecial) {
         CreditoEspecial cdEspecialNew = new CreditoEspecial();
         cdEspecialNew.setFkIdConta(conta);
         cdEspecialNew.setValorSaldo(cdEspecial.getValorSaldo());
-        if (cdInterface.existsByFkIdConta(conta)) {
-            return "Seu crédito especial está ativo.";
-        }
-        if (conta.getSaldoConta() == 0) {
-            if (cdEspecial.getValorSaldo() <= 600) {
-                conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
-                cdInterface.save(cdEspecialNew);
-                return "Pedito aceito com sucesso!";
-            } else
-                return "O crédito que você pediu é superior ao permitido";
-        } else
-            return "Seu saldo não está zerado";
+        conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
+        cdInterface.save(cdEspecialNew);
+    }
+
+
+    @Transactional
+    private void atualizaCredito(Conta conta, CreditoDTO cdEspecial) {
+        CreditoEspecial cdEsp = cdInterface.findByFkIdConta(conta);
+        cdEsp.setValorSaldo(cdEspecial.getValorSaldo() + cdEsp.getValorSaldo());
+        conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
     }
 
     public CreditoEspecial findCredito(Long id) {

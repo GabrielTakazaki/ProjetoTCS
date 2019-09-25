@@ -7,6 +7,7 @@ import rest.five.bank.InternetBanking.controller.dto.DepositoDTO;
 import rest.five.bank.InternetBanking.model.Conta;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -34,7 +35,7 @@ public class ContaController {
 
     @PutMapping("/depositar")
     @Transactional
-    public Object depositar(@RequestBody DepositoDTO dpDTO) {
-        return contaBusiness.depositar(dpDTO);
+    public void depositar(@RequestBody @Valid DepositoDTO dpDTO) {
+        contaBusiness.depositar(dpDTO);
     }
 }
