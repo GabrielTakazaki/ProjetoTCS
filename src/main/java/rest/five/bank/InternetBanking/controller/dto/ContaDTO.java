@@ -2,17 +2,39 @@ package rest.five.bank.InternetBanking.controller.dto;
 
 import rest.five.bank.InternetBanking.model.Cliente;
 
+import java.time.LocalDateTime;
+
 public class ContaDTO {
     private Long numConta;
     private float saldoConta;
     private Cliente fkIdCliente;
+    private LocalDateTime emprDateTime;
+    private boolean existeEmprestimo;
 
-    public ContaDTO(Long numConta, float saldoConta, Cliente fkIdCliente) {
+
+    public ContaDTO(Long numConta, float saldoConta, Cliente fkIdCliente, LocalDateTime emprDate, boolean existeEmprestimo) {
         this.numConta = numConta;
         this.saldoConta = saldoConta;
         this.fkIdCliente = fkIdCliente;
+        this.emprDateTime = emprDate;
+        this.existeEmprestimo = existeEmprestimo;
     }
-    
+
+    public LocalDateTime getEmprDateTime() {
+        return emprDateTime;
+    }
+
+    public void setEmprDateTime(LocalDateTime emprDateTime) {
+        this.emprDateTime = emprDateTime;
+    }
+
+    public boolean isExisteEmprestimo() {
+        return existeEmprestimo;
+    }
+
+    public void setExisteEmprestimo(boolean existeEmprestimo) {
+        this.existeEmprestimo = existeEmprestimo;
+    }
 
     public Long getNumConta() {
         return numConta;

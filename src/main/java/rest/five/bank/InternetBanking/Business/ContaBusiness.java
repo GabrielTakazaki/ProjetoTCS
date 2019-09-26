@@ -54,6 +54,8 @@ public class ContaBusiness {
             creditoEspecial.setValorSaldo(creditoEspecial.getValorSaldo() - dpDTO.getValorDeposito());
 
             if (creditoEspecial.getValorSaldo() <= 0) {
+                optC.get().setEmprDateTime(null);
+                optC.get().setExisteEmprestimo(false);
                 creditoEspecial.setFkIdConta(null);
                 this.creditoEspecialInteface.save(creditoEspecial);
                 this.creditoEspecialInteface.delete(creditoEspecial);

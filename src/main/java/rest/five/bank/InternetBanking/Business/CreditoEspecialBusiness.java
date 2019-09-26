@@ -9,6 +9,7 @@ import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -35,6 +36,8 @@ public class CreditoEspecialBusiness {
         cdEspecialNew.setFkIdConta(conta);
         cdEspecialNew.setValorSaldo(cdEspecial.getValorSaldo());
         conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
+        conta.setExisteEmprestimo(true);
+        conta.setEmprDateTime(LocalDateTime.now());
         cdInterface.save(cdEspecialNew);
     }
 
