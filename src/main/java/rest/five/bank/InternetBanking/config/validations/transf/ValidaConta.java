@@ -15,7 +15,7 @@ public class ValidaConta implements ConstraintValidator<ContaValida, Transferenc
 
     @Override
     public boolean isValid(TransferenciaDTO transferenciaDTO, ConstraintValidatorContext constraintValidatorContext) {
-        if (transferenciaDTO.getIdCreditoDTO().equals(FixedClienteDTO.getIdCliente())) {
+        if (transferenciaDTO.getIdCreditoDTO().equals(cInteface.findByFkIdCliente((FixedClienteDTO.returnCliente())).getNumConta())) {
             return false;
         } else return cInteface.existsById(transferenciaDTO.getIdCreditoDTO());
     }
