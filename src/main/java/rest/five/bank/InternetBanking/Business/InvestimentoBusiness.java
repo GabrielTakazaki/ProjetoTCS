@@ -119,12 +119,17 @@ public class InvestimentoBusiness {
             float aux2 = invDto.getSaldo();
             invDto.setSaldo(cd.getValorSaldo() - invDto.getSaldo());
             cd.setValorSaldo(cd.getValorSaldo() - aux2);
-            if (cd.getValorSaldo() == 0) {
+            if (cd.getValorSaldo() <= 0) {
+                optC.get().setExisteEmprestimo(false);
+                optC.get().setEmprDateTime(null);
                 cd.setFkIdConta(null);
                 cdInterface.delete(cd);
             }
         }
-        optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
+        if (invDto.getSaldo() < 0)
+            optC.get().setSaldoConta(optC.get().getSaldoConta() - invDto.getSaldo());
+        else
+            optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
         investimentoInterface.delete(inv.get());
         return "Investimento retirando com sucesso";
     }
