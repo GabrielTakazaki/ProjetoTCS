@@ -1,7 +1,7 @@
 package rest.five.bank.InternetBanking.model;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
+import javax.persistence.*;
 
 @Entity
 public class Transferencia {
@@ -17,7 +17,7 @@ public class Transferencia {
     private Conta contaCredito;
 
     @Column
-    private float valTransferencia;
+    private Double valTransferencia;
     @Column
     private LocalDateTime dtTransferencia;
 
@@ -45,11 +45,11 @@ public class Transferencia {
         this.contaCredito = contaCredito;
     }
 
-    public float getValTransferencia() {
+    public Double getValTransferencia() {
         return valTransferencia;
     }
 
-    public void setValTransferencia(float valTransferencia) {
+    public void setValTransferencia(Double valTransferencia) {
         this.valTransferencia = valTransferencia;
     }
 

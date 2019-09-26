@@ -1,7 +1,7 @@
 package rest.five.bank.InternetBanking.model;
 
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 public class CreditoEspecial {
@@ -14,7 +14,7 @@ public class CreditoEspecial {
     private Conta fkIdConta;
 
     @Column
-    private float valorSaldo;
+    private Double valorSaldo;
     @Column
     private Date dtCredito = new Date();
 
@@ -34,12 +34,12 @@ public class CreditoEspecial {
         this.fkIdConta = fkIdConta;
     }
 
-    public float getValorSaldo() {
+    public Double getValorSaldo() {
         return valorSaldo;
     }
 
-    public void setValorSaldo(float valorDisponivel) {
-        this.valorSaldo = valorDisponivel;
+    public void setValorSaldo(Double saldoConta) {
+        this.valorSaldo = (double) (int) (saldoConta * 100) / 100;
     }
 
     public Date getDtCredito() {

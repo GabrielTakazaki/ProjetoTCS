@@ -1,5 +1,8 @@
 package rest.five.bank.InternetBanking.Business;
 
+import java.time.LocalDateTime;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rest.five.bank.InternetBanking.controller.dto.CreditoDTO;
@@ -7,10 +10,6 @@ import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
-
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 public class CreditoEspecialBusiness {
@@ -34,7 +33,7 @@ public class CreditoEspecialBusiness {
     private void criaCredito(Conta conta, CreditoDTO cdEspecial) {
         CreditoEspecial cdEspecialNew = new CreditoEspecial();
         cdEspecialNew.setFkIdConta(conta);
-        cdEspecialNew.setValorSaldo(cdEspecial.getValorSaldo());
+        cdEspecialNew.setValorSaldo((double) cdEspecial.getValorSaldo());
         conta.setSaldoConta(conta.getSaldoConta() + cdEspecial.getValorSaldo());
         conta.setExisteEmprestimo(true);
         conta.setEmprDateTime(LocalDateTime.now());

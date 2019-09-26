@@ -56,7 +56,7 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo((double)10);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 
@@ -77,7 +77,7 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo((double)10);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 
@@ -97,7 +97,7 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo((double)10);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 
@@ -110,7 +110,7 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		CreditoEspecial creditoEspecial1 = new CreditoEspecial();
-		creditoEspecial1.setValorSaldo(10);
+		creditoEspecial1.setValorSaldo((double)10);
 		creditoEspecial1.setIdCreditoEspecial(1l);
 		creditoEspecial1.setFkIdConta(conta);
 
@@ -118,7 +118,7 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		when(mockCreditoEspecialInterface.findByFkIdConta(any())).thenReturn(creditoEspecial1);
 		when(mockCreditoEspecialInterface.save(any())).thenAnswer((invocation) -> invocation.getArgument(0));
 		CreditoEspecial creditoEspecial2 = new CreditoEspecial();
-		creditoEspecial2.setValorSaldo(10);
+		creditoEspecial2.setValorSaldo((double)10);
 		creditoEspecial2.setIdCreditoEspecial(1l);
 		creditoEspecial2.setFkIdConta(conta);
 
@@ -131,14 +131,14 @@ public class InternetBankingApplicationCreditoEspecialBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		CreditoEspecial creditoEspecial1 = new CreditoEspecial();
-		creditoEspecial1.setValorSaldo(700);
+		creditoEspecial1.setValorSaldo((double)700);
 		creditoEspecial1.setIdCreditoEspecial(1l);
 		creditoEspecial1.setFkIdConta(conta);
 
 		when(mockContaInterface.findById(1l)).thenReturn(Optional.of(conta));
 		when(mockCreditoEspecialInterface.findByFkIdConta(any())).thenReturn(creditoEspecial1);
 		CreditoEspecial creditoEspecial2 = new CreditoEspecial();
-		creditoEspecial2.setValorSaldo(10);
+		creditoEspecial2.setValorSaldo((double)10);
 		creditoEspecial2.setIdCreditoEspecial(1l);
 		creditoEspecial2.setFkIdConta(conta);
 

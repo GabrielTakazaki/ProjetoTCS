@@ -1,5 +1,9 @@
 package rest.five.bank.InternetBanking.Business;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -9,13 +13,7 @@ import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
 import rest.five.bank.InternetBanking.model.Conta;
-import rest.five.bank.InternetBanking.model.CreditoEspecial;
 import rest.five.bank.InternetBanking.model.Investimento;
-
-import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 @EnableScheduling
@@ -113,13 +111,14 @@ public class InvestimentoBusiness {
         Optional<Investimento> inv = investimentoInterface.findById(invDto.getIdInvestimento());
         inv.get().setSaldo(inv.get().getSaldo() - invDto.getSaldo());
         Optional<Conta> optC = contaInterface.findById(inv.get().getConta().getNumConta());
-        Float aux = invDto.getSaldo();
+        /*Float aux = invDto.getSaldo();
         if (optC.get().isExisteEmprestimo()) {
-            CreditoEspecial cd = cdInterface.findByFkIdConta(optC.get());
-            float aux2 = invDto.getSaldo();
-            invDto.setSaldo(cd.getValorSaldo() - invDto.getSaldo());
-            cd.setValorSaldo(cd.getValorSaldo() - aux2);
+                CreditoEspecial cd = cdInterface.findByFkIdConta(optC.get());
+                float aux2 = invDto.getSaldo();
+                invDto.setSaldo(cd.getValorSaldo() - invDto.getSaldo());
+                cd.setValorSaldo(cd.getValorSaldo() - aux2);
             if (cd.getValorSaldo() <= 0) {
+                optC.get().setSaldoConta(0d);
                 optC.get().setExisteEmprestimo(false);
                 optC.get().setEmprDateTime(null);
                 cd.setFkIdConta(null);
@@ -128,8 +127,8 @@ public class InvestimentoBusiness {
         }
         if (invDto.getSaldo() < 0)
             optC.get().setSaldoConta(optC.get().getSaldoConta() - invDto.getSaldo());
-        else
-            optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
+        else*/
+        optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
         investimentoInterface.delete(inv.get());
         return "Investimento retirando com sucesso";
     }

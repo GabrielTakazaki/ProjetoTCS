@@ -1,5 +1,8 @@
 package rest.five.bank.InternetBanking;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,10 +20,6 @@ import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Cliente;
 import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -54,7 +53,7 @@ public class InternetBankingApplicationContaBusinessTest {
 	}
 	private CreditoEspecial criaCreditoEspecial(Conta conta) {
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo(10d);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 		return creditoEspecial;

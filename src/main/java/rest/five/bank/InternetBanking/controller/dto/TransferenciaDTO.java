@@ -1,10 +1,9 @@
 package rest.five.bank.InternetBanking.controller.dto;
 
+import javax.validation.constraints.Positive;
 import rest.five.bank.InternetBanking.config.validations.transf.ContaValida;
 import rest.five.bank.InternetBanking.config.validations.transf.ValordeTransferencia;
 import rest.five.bank.InternetBanking.model.Transferencia;
-
-import javax.validation.constraints.Positive;
 
 @ValordeTransferencia(message = "Saldo Insuficiente!")
 @ContaValida(message = "Informe uma conta valida!")
@@ -13,7 +12,7 @@ public class TransferenciaDTO {
     private Long idCreditoDTO;
     private Long idDebitoDTO;
     @Positive(message = "O valor não pode ser zero nem negativo")
-    private float valorTransferenciaDTO;
+    private Double valorTransferenciaDTO;
 
     public TransferenciaDTO() {
     }
@@ -40,11 +39,11 @@ public class TransferenciaDTO {
         this.idDebitoDTO = idDebitoDTO;
     }
 
-    public float getValorTransferenciaDTO() {
+    public Double getValorTransferenciaDTO() {
         return valorTransferenciaDTO;
     }
 
-    public void setValorTransferenciaDTO(float valorTransferenciaDTO) {
+    public void setValorTransferenciaDTO(Double valorTransferenciaDTO) {
         this.valorTransferenciaDTO = valorTransferenciaDTO;
     }
 }

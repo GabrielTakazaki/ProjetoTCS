@@ -1,5 +1,10 @@
 package rest.five.bank.InternetBanking.Business;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import rest.five.bank.InternetBanking.controller.dto.TransferenciaDTO;
@@ -10,12 +15,6 @@ import rest.five.bank.InternetBanking.model.Conta;
 import rest.five.bank.InternetBanking.model.CreditoEspecial;
 import rest.five.bank.InternetBanking.model.Transferencia;
 
-import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 @Service
 public class TransferenciaBusiness {
     @Autowired
@@ -25,7 +24,7 @@ public class TransferenciaBusiness {
     @Autowired
     CreditoEspecialInterface cdInterface;
 
-    private Float auxCre;
+    private Double auxCre;
 
     public TransferenciaDTO addTrans(TransferenciaDTO transferenciaDTO) {
         Transferencia transf = new Transferencia();
@@ -38,7 +37,7 @@ public class TransferenciaBusiness {
         transf.setValTransferencia(transferenciaDTO.getValorTransferenciaDTO());
         transf.setDtTransferencia(LocalDateTime.now());
 
-        float auxVal = transferenciaDTO.getValorTransferenciaDTO();
+        Double auxVal = transferenciaDTO.getValorTransferenciaDTO();
         calculaConta(optCCredito.get(), optCDebito.get(), transferenciaDTO.getValorTransferenciaDTO(), auxVal, creditoEspecial(transferenciaDTO));
         transferenciaInterface.save(transf);
         return new TransferenciaDTO(transf);
@@ -52,7 +51,7 @@ public class TransferenciaBusiness {
 
             auxCre = cd.getValorSaldo();
 
-            Float aux2 = transf.getValorTransferenciaDTO();
+            Double aux2 = transf.getValorTransferenciaDTO();
             transf.setValorTransferenciaDTO(transf.getValorTransferenciaDTO() - cd.getValorSaldo());
             cd.setValorSaldo(cd.getValorSaldo() - aux2);
 
@@ -87,11 +86,11 @@ public class TransferenciaBusiness {
     }
 
     @Transactional
-    public void calculaConta(Conta contaCredito, Conta contaDebito, float valorTransferenciaDTO, float valorTransferencia, String b) {
+    public void calculaConta(Conta contaCredito, Conta contaDebito, Double valorTransferenciaDTO, Double valorTransferencia, String b) {
         if (b.equals("Nao tem"))
             contaCredito.setSaldoConta(contaCredito.getSaldoConta() + valorTransferenciaDTO);
         else if (b.equals("Deletado"))
-            contaCredito.setSaldoConta((double) (valorTransferenciaDTO - auxCre));
+            contaCredito.setSaldoConta(valorTransferenciaDTO - auxCre);
         else if (b.equals("Ainda Ativo"))
             contaCredito.setSaldoConta(contaCredito.getSaldoConta() - valorTransferenciaDTO);
         contaDebito.setSaldoConta(contaDebito.getSaldoConta() - valorTransferencia);
