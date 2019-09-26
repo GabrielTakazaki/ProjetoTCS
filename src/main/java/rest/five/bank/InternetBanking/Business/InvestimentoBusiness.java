@@ -6,8 +6,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import rest.five.bank.InternetBanking.controller.dto.InvestimentoDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
+import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
 import rest.five.bank.InternetBanking.model.Conta;
+import rest.five.bank.InternetBanking.model.CreditoEspecial;
 import rest.five.bank.InternetBanking.model.Investimento;
 
 import javax.transaction.Transactional;
@@ -22,20 +24,8 @@ public class InvestimentoBusiness {
     InvestimentoInterface investimentoInterface;
     @Autowired
     private ContaInterface contaInterface;
-
-
-    //================================================================================
-    // Verifica o tipo do investimento
-    //================================================================================
-    public String tipoDeInvestimento(Investimento investimento) {
-        if (investimento.getNomeInvestimento().equals("POUPANCA")) {
-            return "POUPANCA";
-        } else if (investimento.getNomeInvestimento().equals("CDI")) {
-            return "CDI";
-        } else if (investimento.getNomeInvestimento().equals("IPCA")) {
-            return "IPCA";
-        } else return null;
-    }
+    @Autowired
+    private CreditoEspecialInterface cdInterface;
 
     //================================================================================
     // Realiza um novo investimento
@@ -123,6 +113,17 @@ public class InvestimentoBusiness {
         Optional<Investimento> inv = investimentoInterface.findById(invDto.getIdInvestimento());
         inv.get().setSaldo(inv.get().getSaldo() - invDto.getSaldo());
         Optional<Conta> optC = contaInterface.findById(inv.get().getConta().getNumConta());
+        Float aux = invDto.getSaldo();
+        if (optC.get().isExisteEmprestimo()) {
+            CreditoEspecial cd = cdInterface.findByFkIdConta(optC.get());
+            float aux2 = invDto.getSaldo();
+            invDto.setSaldo(cd.getValorSaldo() - invDto.getSaldo());
+            cd.setValorSaldo(cd.getValorSaldo() - aux2);
+            if (cd.getValorSaldo() == 0) {
+                cd.setFkIdConta(null);
+                cdInterface.delete(cd);
+            }
+        }
         optC.get().setSaldoConta(optC.get().getSaldoConta() + invDto.getSaldo());
         investimentoInterface.delete(inv.get());
         return "Investimento retirando com sucesso";

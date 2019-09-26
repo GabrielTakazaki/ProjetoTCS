@@ -25,6 +25,8 @@ public class TransferenciaBusiness {
     @Autowired
     CreditoEspecialInterface cdInterface;
 
+    private Float auxCre;
+
     public TransferenciaDTO addTrans(TransferenciaDTO transferenciaDTO) {
         Transferencia transf = new Transferencia();
 
@@ -37,46 +39,38 @@ public class TransferenciaBusiness {
         transf.setDtTransferencia(LocalDateTime.now());
 
         float auxVal = transferenciaDTO.getValorTransferenciaDTO();
-
-        transferenciaDTO = creditoEspecial(transferenciaDTO);
-
-        calculaConta(optCCredito.get(), optCDebito.get(), transferenciaDTO.getValorTransferenciaDTO(), auxVal);
+        calculaConta(optCCredito.get(), optCDebito.get(), transferenciaDTO.getValorTransferenciaDTO(), auxVal, creditoEspecial(transferenciaDTO));
         transferenciaInterface.save(transf);
         return new TransferenciaDTO(transf);
     }
 
     @Transactional
-    private TransferenciaDTO creditoEspecial(TransferenciaDTO transf) {
+    private String creditoEspecial(TransferenciaDTO transf) {
         Optional<Conta> conta = contaInterface.findById(transf.getIdCreditoDTO());
         if (conta.get().isExisteEmprestimo()) {
             CreditoEspecial cd = cdInterface.findByFkIdConta(conta.get());
 
+            auxCre = cd.getValorSaldo();
+
+            Float aux2 = transf.getValorTransferenciaDTO();
             transf.setValorTransferenciaDTO(transf.getValorTransferenciaDTO() - cd.getValorSaldo());
-            cd.setValorSaldo(cd.getValorSaldo() - transf.getValorTransferenciaDTO());
-            conta.get().setSaldoConta(cd.getValorSaldo());
+            cd.setValorSaldo(cd.getValorSaldo() - aux2);
+
 
             if (cd.getValorSaldo() <= 0) {
                 conta.get().setEmprDateTime(null);
                 conta.get().setExisteEmprestimo(false);
                 cd.setFkIdConta(null);
                 cdInterface.delete(cd);
+                return "Deletado";
             }
 
-            return transf;
+            return "Ainda Ativo";
         }
 
-        return transf;
+        return "Nao tem";
     }
 
-    public List<Transferencia> listTransf(Long idConta) {
-        List<Transferencia> listaTransferencia = new ArrayList<>();
-        for (Transferencia transf : transferenciaInterface.findAll()) {
-            if (transf.getContaDebito().getNumConta().equals(idConta) || transf.getContaCredito().getNumConta().equals(idConta)) {
-                listaTransferencia.add(transf);
-            }
-        }
-        return listaTransferencia;
-    }
 
     public List<TransferenciaDTO> listaTudoComId(Long id) {
         List<TransferenciaDTO> transferenciaDTOList = new ArrayList<>();
@@ -93,8 +87,13 @@ public class TransferenciaBusiness {
     }
 
     @Transactional
-    public void calculaConta(Conta contaCredito, Conta contaDebito, float valorTransferenciaDTO, float valorTransferencia) {
-        contaCredito.setSaldoConta(contaCredito.getSaldoConta() + valorTransferenciaDTO);
+    public void calculaConta(Conta contaCredito, Conta contaDebito, float valorTransferenciaDTO, float valorTransferencia, String b) {
+        if (b.equals("Nao tem"))
+            contaCredito.setSaldoConta(contaCredito.getSaldoConta() + valorTransferenciaDTO);
+        else if (b.equals("Deletado"))
+            contaCredito.setSaldoConta(valorTransferenciaDTO - auxCre);
+        else if (b.equals("Ainda Ativo"))
+            contaCredito.setSaldoConta(contaCredito.getSaldoConta() - valorTransferenciaDTO);
         contaDebito.setSaldoConta(contaDebito.getSaldoConta() - valorTransferencia);
     }
 }
