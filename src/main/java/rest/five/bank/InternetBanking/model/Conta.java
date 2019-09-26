@@ -21,8 +21,8 @@ public class Conta {
     @Column
     private LocalDateTime emprDateTime;
 
-    @Column
-    private boolean existeEmprestimo = false;
+    @Column(columnDefinition = "boolean default false")
+    private boolean existeEmprestimo;
 
     public LocalDateTime getEmprDateTime() {
         return emprDateTime;

@@ -35,7 +35,7 @@ public class CreditoEspecialBusiness {
         CreditoEspecial cdEspecialNew = new CreditoEspecial();
         cdEspecialNew.setFkIdConta(conta);
         cdEspecialNew.setValorSaldo(cdEspecial.getValorSaldo());
-        conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
+        conta.setSaldoConta(conta.getSaldoConta() + cdEspecial.getValorSaldo());
         conta.setExisteEmprestimo(true);
         conta.setEmprDateTime(LocalDateTime.now());
         cdInterface.save(cdEspecialNew);
@@ -46,7 +46,7 @@ public class CreditoEspecialBusiness {
     private void atualizaCredito(Conta conta, CreditoDTO cdEspecial) {
         CreditoEspecial cdEsp = cdInterface.findByFkIdConta(conta);
         cdEsp.setValorSaldo(cdEspecial.getValorSaldo() + cdEsp.getValorSaldo());
-        conta.setSaldoConta(conta.getSaldoConta() - cdEspecial.getValorSaldo());
+        conta.setSaldoConta(conta.getSaldoConta() + cdEspecial.getValorSaldo());
     }
 
     public CreditoEspecial findCredito(Long id) {

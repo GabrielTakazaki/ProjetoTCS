@@ -1,9 +1,13 @@
 package rest.five.bank.InternetBanking.controller.dto;
 
+import rest.five.bank.InternetBanking.config.validations.transf.ContaValida;
+import rest.five.bank.InternetBanking.config.validations.transf.ValordeTransferencia;
 import rest.five.bank.InternetBanking.model.Transferencia;
 
 import javax.validation.constraints.Positive;
 
+@ValordeTransferencia(message = "Saldo Insuficiente!")
+@ContaValida(message = "Informe uma conta valida!")
 public class TransferenciaDTO {
 
     private Long idCreditoDTO;

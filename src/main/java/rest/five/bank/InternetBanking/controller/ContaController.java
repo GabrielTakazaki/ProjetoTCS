@@ -19,7 +19,7 @@ public class ContaController {
     ContaBusiness contaBusiness;
 
     @GetMapping("/contaAdd")
-    public Object addConta() {
+    public Conta addConta() {
         return contaBusiness.addConta();
     }
 

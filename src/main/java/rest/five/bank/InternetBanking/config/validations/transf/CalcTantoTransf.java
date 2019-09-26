@@ -1,8 +1,8 @@
-package rest.five.bank.InternetBanking.config.validations.creditoEspecial;
+package rest.five.bank.InternetBanking.config.validations.transf;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import rest.five.bank.InternetBanking.controller.dto.CreditoDTO;
 import rest.five.bank.InternetBanking.controller.dto.FixedClienteDTO;
+import rest.five.bank.InternetBanking.controller.dto.TransferenciaDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.model.Conta;
@@ -10,16 +10,21 @@ import rest.five.bank.InternetBanking.model.Conta;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class SaldoZerado implements ConstraintValidator<TemDinheiro, CreditoDTO> {
+public class CalcTantoTransf implements ConstraintValidator<ValordeTransferencia, TransferenciaDTO> {
+
     @Autowired
     ContaInterface cInterface;
     @Autowired
     CreditoEspecialInterface credInterface;
+
     @Override
-    public boolean isValid(CreditoDTO creditoDTO, ConstraintValidatorContext constraintValidatorContext) {
+    public void initialize(ValordeTransferencia constraintAnnotation) {
+
+    }
+
+    @Override
+    public boolean isValid(TransferenciaDTO transferenciaDTO, ConstraintValidatorContext constraintValidatorContext) {
         Conta optC = cInterface.findByFkIdCliente(FixedClienteDTO.returnCliente());
-        if (optC.getSaldoConta() < 0) {
-            return false;
-        } else return !(optC.getSaldoConta() > 0) || optC.isExisteEmprestimo();
+        return optC.getSaldoConta() >= transferenciaDTO.getValorTransferenciaDTO();
     }
 }

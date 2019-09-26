@@ -25,7 +25,7 @@ public class ContaBusiness {
 
     ContaForm contaForm = new ContaForm();
 
-    public Object addConta() {
+    public Conta addConta() {
 
         if (contaInterface.existsByFkIdCliente(FixedClienteDTO.returnCliente())) {
             return contaInterface.findByFkIdCliente(FixedClienteDTO.returnCliente());
@@ -47,19 +47,25 @@ public class ContaBusiness {
 
     public void depositar(DepositoDTO dpDTO) {
         Optional<Conta> optC = contaInterface.findById(dpDTO.getIdConta());
-        optC.get().setSaldoConta(optC.get().getSaldoConta() + dpDTO.getValorDeposito());
 
         if (creditoEspecialInteface.existsByFkIdConta(optC.get())) {
             CreditoEspecial creditoEspecial = this.creditoEspecialInteface.findByFkIdConta(optC.get());
             creditoEspecial.setValorSaldo(creditoEspecial.getValorSaldo() - dpDTO.getValorDeposito());
 
-            if (creditoEspecial.getValorSaldo() <= 0) {
-                optC.get().setEmprDateTime(null);
-                optC.get().setExisteEmprestimo(false);
-                creditoEspecial.setFkIdConta(null);
-                this.creditoEspecialInteface.save(creditoEspecial);
-                this.creditoEspecialInteface.delete(creditoEspecial);
-            }
+            optC.get().setSaldoConta(optC.get().getSaldoConta() - dpDTO.getValorDeposito());
+            deletaCredito(creditoEspecial, optC.get());
+        } else {
+            optC.get().setSaldoConta(optC.get().getSaldoConta() + dpDTO.getValorDeposito());
+        }
+    }
+
+    public void deletaCredito(CreditoEspecial creditoEspecial, Conta conta) {
+        if (creditoEspecial.getValorSaldo() <= 0) {
+            conta.setEmprDateTime(null);
+            conta.setExisteEmprestimo(false);
+            creditoEspecial.setFkIdConta(null);
+            this.creditoEspecialInteface.save(creditoEspecial);
+            this.creditoEspecialInteface.delete(creditoEspecial);
         }
     }
 }
