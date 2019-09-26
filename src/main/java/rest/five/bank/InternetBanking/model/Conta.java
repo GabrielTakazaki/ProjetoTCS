@@ -12,7 +12,7 @@ public class Conta {
     private Long numConta;
 
     @Column
-    private float saldoConta;
+    private Double saldoConta;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "idCliente", referencedColumnName = "idCliente", unique = true)
@@ -48,12 +48,12 @@ public class Conta {
         this.numConta = numConta;
     }
 
-    public float getSaldoConta() {
+    public Double getSaldoConta() {
         return saldoConta;
     }
 
-    public void setSaldoConta(float saldoConta) {
-        this.saldoConta = saldoConta;
+    public void setSaldoConta(Double saldoConta) {
+        this.saldoConta = (double) (int) (saldoConta * 100) / 100;
     }
 
     public Cliente getFkIdCliente() {

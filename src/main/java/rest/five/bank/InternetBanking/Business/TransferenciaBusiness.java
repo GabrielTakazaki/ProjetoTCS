@@ -91,7 +91,7 @@ public class TransferenciaBusiness {
         if (b.equals("Nao tem"))
             contaCredito.setSaldoConta(contaCredito.getSaldoConta() + valorTransferenciaDTO);
         else if (b.equals("Deletado"))
-            contaCredito.setSaldoConta(valorTransferenciaDTO - auxCre);
+            contaCredito.setSaldoConta((double) (valorTransferenciaDTO - auxCre));
         else if (b.equals("Ainda Ativo"))
             contaCredito.setSaldoConta(contaCredito.getSaldoConta() - valorTransferenciaDTO);
         contaDebito.setSaldoConta(contaDebito.getSaldoConta() - valorTransferencia);

@@ -6,13 +6,13 @@ import java.time.LocalDateTime;
 
 public class ContaDTO {
     private Long numConta;
-    private float saldoConta;
+    private Double saldoConta;
     private Cliente fkIdCliente;
     private LocalDateTime emprDateTime;
     private boolean existeEmprestimo;
 
 
-    public ContaDTO(Long numConta, float saldoConta, Cliente fkIdCliente, LocalDateTime emprDate, boolean existeEmprestimo) {
+    public ContaDTO(Long numConta, Double saldoConta, Cliente fkIdCliente, LocalDateTime emprDate, boolean existeEmprestimo) {
         this.numConta = numConta;
         this.saldoConta = saldoConta;
         this.fkIdCliente = fkIdCliente;
@@ -44,11 +44,11 @@ public class ContaDTO {
         this.numConta = numConta;
     }
 
-    public float getSaldoConta() {
+    public Double getSaldoConta() {
         return saldoConta;
     }
 
-    public void setSaldoConta(float saldoConta) {
+    public void setSaldoConta(Double saldoConta) {
         this.saldoConta = saldoConta;
     }
 
