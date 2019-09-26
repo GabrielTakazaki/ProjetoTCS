@@ -10,6 +10,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import rest.five.bank.InternetBanking.Business.ContaBusiness;
 import rest.five.bank.InternetBanking.controller.dto.DepositoDTO;
+import rest.five.bank.InternetBanking.controller.dto.FixedClienteDTO;
 import rest.five.bank.InternetBanking.entities.ClienteInterface;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
@@ -59,7 +60,7 @@ public class InternetBankingApplicationContaBusinessTest {
 		return creditoEspecial;
 	}
 
-    /*@Test
+    @Test
     public void TestContaBusinessAddConta() {
         when(mockClienteInterface.findByCpfCliente(FixedClienteDTO.getCpfCliente())).thenReturn(cliente);
         Conta contaExpected = criaConta(cliente);
@@ -67,7 +68,7 @@ public class InternetBankingApplicationContaBusinessTest {
 
         Conta contaAtual = contaBusiness.addConta();
         Assert.assertEquals(contaExpected,contaAtual);
-    }*/
+    }
 	@Test
 	public void TestContaBusinessAddContaExist() {
 		Conta conta = criaConta(cliente);
@@ -80,6 +81,7 @@ public class InternetBankingApplicationContaBusinessTest {
 		DepositoDTO depositoDTO = new DepositoDTO();
 		depositoDTO.setIdConta(1l);
 		depositoDTO.setValorDeposito(20);
+
 		Conta conta = criaConta(cliente);
 		conta.setNumConta(1l);
 		CreditoEspecial creditoEspecial = criaCreditoEspecial(conta);
