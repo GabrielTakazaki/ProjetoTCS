@@ -48,7 +48,7 @@ public class InternetBankingApplicationContaBusinessTest {
 
 	private Conta criaConta(Cliente cliente) {
 		Conta conta = new Conta();
-		conta.setSaldoConta(0);
+		conta.setSaldoConta((double) 0);
 		conta.setFkIdCliente(cliente);
 		return conta;
 	}

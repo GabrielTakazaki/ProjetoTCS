@@ -60,7 +60,7 @@ public class InternetBankingApplicationTransferenciaBusinessTest {
 	private Conta criaConta(Cliente cliente) {
 		Conta conta = new Conta();
 		conta.setNumConta(cliente.getIdCliente());
-		conta.setSaldoConta(100);
+		conta.setSaldoConta((double) 100);
 		conta.setFkIdCliente(cliente);
 		return conta;
 	}
