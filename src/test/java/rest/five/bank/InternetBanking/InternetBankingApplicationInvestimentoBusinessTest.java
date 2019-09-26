@@ -1,5 +1,8 @@
 package rest.five.bank.InternetBanking;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,19 +13,14 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import rest.five.bank.InternetBanking.Business.InvestimentoBusiness;
-import rest.five.bank.InternetBanking.Business.TransferenciaBusiness;
 import rest.five.bank.InternetBanking.controller.dto.InvestimentoDTO;
-import rest.five.bank.InternetBanking.controller.dto.TransferenciaDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
-import rest.five.bank.InternetBanking.entities.TransferenciaInterface;
-import rest.five.bank.InternetBanking.model.*;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import rest.five.bank.InternetBanking.model.Cliente;
+import rest.five.bank.InternetBanking.model.Conta;
+import rest.five.bank.InternetBanking.model.CreditoEspecial;
+import rest.five.bank.InternetBanking.model.Investimento;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
@@ -59,7 +57,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 	private Conta criaConta(Cliente cliente) {
 		Conta conta = new Conta();
 		conta.setNumConta(cliente.getIdCliente());
-		conta.setSaldoConta(110);
+        conta.setSaldoConta(110d);
 		conta.setFkIdCliente(cliente);
 		return conta;
 	}
@@ -156,7 +154,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 
 		List<Investimento> investimentoList = Arrays.asList(investimento1, investimento2, investimento3);
 		when(mockInvestimentoInterface.findAll()).thenReturn(investimentoList);
-		investimentoBusiness.realizaInv();
+        //investimentoBusiness.realizaInv();
 
 		InOrder inOrder = Mockito.inOrder(mockInvestimentoInterface);
 		inOrder.verify(mockInvestimentoInterface, times(1)).save(investimento1);
