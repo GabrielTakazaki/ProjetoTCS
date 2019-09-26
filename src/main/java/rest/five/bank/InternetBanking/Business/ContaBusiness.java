@@ -53,7 +53,9 @@ public class ContaBusiness {
             creditoEspecial.setValorSaldo(creditoEspecial.getValorSaldo() - dpDTO.getValorDeposito());
 
 
-            optC.get().setSaldoConta(dpDTO.getValorDeposito() - optC.get().getSaldoConta());
+            optC.get().setSaldoConta(optC.get().getSaldoConta() - dpDTO.getValorDeposito());
+            if(optC.get().getSaldoConta() < 0)
+                optC.get().setSaldoConta(optC.get().getSaldoConta() - (optC.get().getSaldoConta()*2));
             deletaCredito(creditoEspecial, optC.get());
         } else {
             optC.get().setSaldoConta(optC.get().getSaldoConta() + dpDTO.getValorDeposito());
