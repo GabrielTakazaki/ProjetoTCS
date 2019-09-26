@@ -107,7 +107,6 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 
 		when(mockContaInterface.findById(any())).thenReturn(Optional.of(conta));
 		when(mockInvestimentoInterface.findById(1l)).thenReturn(Optional.of(investimento));
-		when(mockCreditoEspecial.findByFkIdConta(conta)).thenReturn(creditoEspecial);
 
 		Object obj = investimentoBusiness.tiraDinheiro(investimentoDTO);
 		Assert.assertEquals("Investimento retirando com sucesso", obj);
@@ -149,7 +148,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 
 		List<Investimento> investimentoList = Arrays.asList(investimento1, investimento2, investimento3);
 		when(mockInvestimentoInterface.findAll()).thenReturn(investimentoList);
-        //investimentoBusiness.realizaInv();
+        investimentoBusiness.realizaInv();
 
 		InOrder inOrder = Mockito.inOrder(mockInvestimentoInterface);
 		inOrder.verify(mockInvestimentoInterface, times(1)).save(investimento1);
