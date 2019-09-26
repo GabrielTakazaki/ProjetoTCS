@@ -10,16 +10,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import rest.five.bank.InternetBanking.Business.InvestimentoBusiness;
-import rest.five.bank.InternetBanking.Business.TransferenciaBusiness;
 import rest.five.bank.InternetBanking.controller.dto.InvestimentoDTO;
-import rest.five.bank.InternetBanking.controller.dto.TransferenciaDTO;
 import rest.five.bank.InternetBanking.entities.ContaInterface;
 import rest.five.bank.InternetBanking.entities.CreditoEspecialInterface;
 import rest.five.bank.InternetBanking.entities.InvestimentoInterface;
-import rest.five.bank.InternetBanking.entities.TransferenciaInterface;
 import rest.five.bank.InternetBanking.model.*;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +55,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 	private Conta criaConta(Cliente cliente) {
 		Conta conta = new Conta();
 		conta.setNumConta(cliente.getIdCliente());
-		conta.setSaldoConta(110);
+		conta.setSaldoConta(110d);
 		conta.setFkIdCliente(cliente);
 		return conta;
 	}
@@ -79,11 +75,8 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 
 		InvestimentoDTO investimentoDTO = criaInvestimento("POUPANCA");
 		Investimento investimento = investimentoDTO.retornaInvestimento(conta);
-		List<Investimento> investimentoList = Arrays.asList(investimento);
 
-		//when(mockInvestimentoInterface.findAll()).thenReturn(investimentoList);
 		when(mockContaInterface.findById(any())).thenReturn(Optional.of(conta));
-
 		Object obj = investimentoBusiness.addInv(investimentoDTO);
 		Assert.assertEquals(null, obj);
 	}
@@ -92,6 +85,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 		Conta conta = criaConta(cliente1);
 
 		InvestimentoDTO investimentoDTO = criaInvestimento("POUPANCA");
+		investimentoDTO.setSaldo(120);
 		when(mockContaInterface.findById(any())).thenReturn(Optional.of(conta));
 
 		Object obj = investimentoBusiness.addInv(investimentoDTO);

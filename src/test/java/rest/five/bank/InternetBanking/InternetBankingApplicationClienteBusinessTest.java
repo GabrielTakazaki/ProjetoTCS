@@ -6,13 +6,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
 import rest.five.bank.InternetBanking.Business.ClienteBusiness;
 import rest.five.bank.InternetBanking.controller.Form.ClienteForm;
-import rest.five.bank.InternetBanking.controller.dto.ClienteDTO;
 import rest.five.bank.InternetBanking.entities.ClienteInterface;
 import rest.five.bank.InternetBanking.model.Cliente;
 
