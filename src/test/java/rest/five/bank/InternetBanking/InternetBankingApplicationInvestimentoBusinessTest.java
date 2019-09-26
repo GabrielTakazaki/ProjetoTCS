@@ -104,7 +104,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 		InvestimentoDTO investimentoDTO = criaInvestimento("POUPANCA");
 
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo(10d);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 
@@ -125,7 +125,7 @@ public class InternetBankingApplicationInvestimentoBusinessTest {
 		InvestimentoDTO investimentoDTO = criaInvestimento("POUPANCA");
 
 		CreditoEspecial creditoEspecial = new CreditoEspecial();
-		creditoEspecial.setValorSaldo(10);
+		creditoEspecial.setValorSaldo(10d);
 		creditoEspecial.setIdCreditoEspecial(1l);
 		creditoEspecial.setFkIdConta(conta);
 
