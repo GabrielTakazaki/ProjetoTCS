@@ -42,3 +42,12 @@ jdbc:h2:mem:testdb
 
 User Name:sa
 Password:password
+
+## Testes
+
+Os testes foram feitos com o JUnit e Mockito
+
+Os testes no projeto estão localizados na pasta
+``\src\test\java\rest\five\bank\InternetBanking``
+
+Onde são realizados testes em todo o Business do projeto, tendo uma cobertura nos métodos acima de 90% e cobertura nas linhas acima de 80%
